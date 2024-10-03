@@ -1,6 +1,16 @@
 package org.hbrs.se1.ws24.exercises.uebung1.view;
 
+import org.hbrs.se1.ws24.exercises.uebung1.control.GermanTranslator;
+import org.hbrs.se1.ws24.exercises.uebung1.control.Translator;
+import org.hbrs.se1.ws24.exercises.uebung1.control.TranslatorFactory;
+
 public class Client {
+
+	private final Translator translator;
+
+	public Client() {
+		this.translator = TranslatorFactory.createTranslator();
+	}
 
 		/**
 		 * Methode zur Ausgabe einer Zahl auf der Console
@@ -14,9 +24,19 @@ public class Client {
 			//
 			// Strenge Implementierung (nur) gegen das Interface Translator gewuenscht!
 
-			 System.out.println("Das Ergebnis der Berechnung: " +
-					"[das Ergebnis an dieser Stelle]" );
+			 String ergebnis = translator.translateNumber(aNumber);
 
+
+			 System.out.println("Das Ergebnis der Berechnung: " + ergebnis);
+
+		 }
+
+		 public static void main(String[] args) {
+			 Client client = new Client();
+
+			 int number = 5;
+
+			 client.display(number);
 		 }
 }
 

@@ -1,16 +1,35 @@
 package org.hbrs.se1.ws24.exercises.uebung1.control;
 
+import java.util.Map;
+
 public class GermanTranslator implements Translator {
 
 	public String date = "Okt/2024"; // Default-Wert
+
+	private final Map<Integer, String> translateNumber = Map.of(
+			1, "eins",
+			2, "zwei",
+			3, "drei",
+			4, "vier",
+			5, "fünf",
+			6, "sechs",
+			7, "sieben",
+			8, "acht",
+			9, "neun",
+			10,"zehn"
+	);
 
 	/**
 	 * Methode zur Übersetzung einer Zahl in eine String-Repraesentation
 	 */
 	public String translateNumber( int number ) {
-		// [ihr Source Code aus Übung 1-2]
+		String ueberSetzung = translateNumber.get(number);
 
-		return "null";
+		if(ueberSetzung == null) {
+			return "Übersetzung der Zahl " + number + " nicht möglich.\n" + "Translatorversion: " +version;
+		}
+
+		return ueberSetzung;
 	}
 
 	/**
