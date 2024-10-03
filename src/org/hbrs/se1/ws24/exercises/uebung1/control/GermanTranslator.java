@@ -23,13 +23,11 @@ public class GermanTranslator implements Translator {
 	 * Methode zur Übersetzung einer Zahl in eine String-Repraesentation
 	 */
 	public String translateNumber( int number ) {
-		String ueberSetzung = translateNumber.get(number);
-
-		if(ueberSetzung == null) {
-			return "Übersetzung der Zahl " + number + " nicht möglich.\n" + "Translatorversion: " +version;
+		String uebersetzung = translateNumber.get(number);
+		if(uebersetzung == null) {
+			return ("Übersetzung der Zahl " + number + " nicht möglich.\n" + "Translatorversion: " + version);
 		}
-
-		return ueberSetzung;
+		return uebersetzung;
 	}
 
 	/**

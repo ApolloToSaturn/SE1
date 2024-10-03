@@ -25,17 +25,7 @@ public class Client {
 
 			 String ergebnis = translator.translateNumber(aNumber);
 
-
 			 System.out.println("Das Ergebnis der Berechnung: " + ergebnis);
-
-		 }
-
-		 public static void main(String[] args) {
-			 Client client = new Client();
-
-			 int number = 5;
-
-			 client.display(number);
 		 }
 }
 
