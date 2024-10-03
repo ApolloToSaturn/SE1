@@ -25,7 +25,7 @@ public class GermanTranslator implements Translator {
 	public String translateNumber( int number ) {
 		String uebersetzung = translateNumber.get(number);
 		if(uebersetzung == null) {
-			return ("Übersetzung der Zahl " + number + " nicht möglich.\n" + "Translatorversion: " + version);
+			return ("Übersetzung der Zahl " + number + " nicht möglich.\n" + "(Translatorversion: " + version +")");
 		}
 		return uebersetzung;
 	}
