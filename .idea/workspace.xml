@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11b931b2-f8a2-4546-af99-1df1f0f211cc" name="Changes" comment="Anpassung der translateNumber-Methode&#10;&#10;Main-Methode in Client entfernt&#10;&#10;Testklasse GermanTranslatorTest erstellt und verschiedene Testfälle implementiert.">
+    <list default="true" id="11b931b2-f8a2-4546-af99-1df1f0f211cc" name="Changes" comment="Factoryklasse in ein eigenes Packages verschoben.">
+      <change afterPath="$PROJECT_DIR$/test/org/hbrs/se1/ws24/tests/uebung1/GermanTranslatorTest.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codesSE2024.iml" beforeDir="false" afterPath="$PROJECT_DIR$/codesSE2024.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung1/control/TranslatorFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung1/factory/TranslatorFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung1/view/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung1/view/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/org/hbrs/se1/ws24/tests/uebung1/GermanTranslatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/org/hbrs/se1/ws24/tests/uebung1/GermanTranslatorTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +54,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "Application.Client.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.GermanTranslatorTest.executor": "Run",
@@ -114,7 +112,7 @@
       <workItem from="1727176958305" duration="1892000" />
       <workItem from="1727943387765" duration="5112000" />
       <workItem from="1727950187212" duration="2537000" />
-      <workItem from="1728209175010" duration="3256000" />
+      <workItem from="1728209175010" duration="4496000" />
     </task>
     <task id="LOCAL-00001" summary="Anpassung der translateNumber-Methode&#10;&#10;Main-Methode in Client entfernt&#10;&#10;Testklasse GermanTranslatorTest erstellt und verschiedene Testfälle implementiert.">
       <option name="closed" value="true" />
@@ -124,7 +122,14 @@
       <option name="project" value="LOCAL" />
       <updated>1727952536844</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Factoryklasse in ein eigenes Packages verschoben.">
+      <created>1728212641831</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1728212641831</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,8 +147,10 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Anpassung der translateNumber-Methode&#10;&#10;Main-Methode in Client entfernt&#10;&#10;Testklasse GermanTranslatorTest erstellt und verschiedene Testfälle implementiert." />
-    <option name="LAST_COMMIT_MESSAGE" value="Anpassung der translateNumber-Methode&#10;&#10;Main-Methode in Client entfernt&#10;&#10;Testklasse GermanTranslatorTest erstellt und verschiedene Testfälle implementiert." />
+    <MESSAGE value="Factoryklasse in ein eigenes Packages verschoben." />
+    <option name="LAST_COMMIT_MESSAGE" value="Factoryklasse in ein eigenes Packages verschoben." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
