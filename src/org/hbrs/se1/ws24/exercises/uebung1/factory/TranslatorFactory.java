@@ -1,5 +1,8 @@
-package org.hbrs.se1.ws24.exercises.uebung1.control;
+package org.hbrs.se1.ws24.exercises.uebung1.factory;
 
+
+import org.hbrs.se1.ws24.exercises.uebung1.control.GermanTranslator;
+import org.hbrs.se1.ws24.exercises.uebung1.control.Translator;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
