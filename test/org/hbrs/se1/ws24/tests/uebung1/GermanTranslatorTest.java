@@ -28,7 +28,7 @@ public class GermanTranslatorTest {
 
     @Test
     public void negativTest() {
-        assertNotEquals("elf" , translator.translateNumber(11));
+        assertNotEquals("vierzehn" , translator.translateNumber(14));
     }
 
     @Test

@@ -11,22 +11,21 @@ public class Client {
 		this.translator = TranslatorFactory.createTranslator();
 	}
 
-		/**
-		 * Methode zur Ausgabe einer Zahl auf der Console
-		 * (auch bezeichnet als CLI, Terminal)
-		 *
-		 */
-		 void display( int aNumber ){
-			// In dieser Methode soll die Methode translateNumber
-			// mit dem übergegebenen Wert der Variable aNumber
-			// aufgerufen werden.
-			//
-			// Strenge Implementierung (nur) gegen das Interface Translator gewuenscht!
+	/**
+	* Methode zur Ausgabe einer Zahl auf der Console
+	* (auch bezeichnet als CLI, Terminal)
+	*
+	*/
+	void display( int aNumber ){
+		// In dieser Methode soll die Methode translateNumber
+		// mit dem übergegebenen Wert der Variable aNumber
+		// aufgerufen werden.
+		//
+		// Strenge Implementierung (nur) gegen das Interface Translator gewuenscht!
+		String ergebnis = translator.translateNumber(aNumber);
 
-			 String ergebnis = translator.translateNumber(aNumber);
-
-			 System.out.println("Das Ergebnis der Berechnung: " + ergebnis);
-		 }
+		System.out.println("Das Ergebnis der Berechnung: " + ergebnis);
+	}
 }
 
 
