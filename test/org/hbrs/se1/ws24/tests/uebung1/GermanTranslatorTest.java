@@ -22,17 +22,17 @@ public class GermanTranslatorTest {
     }
 
     @Test
-    public void nullTest() {
+    public void nullAndLessTestCase() {
         assertNotEquals("null" , translator.translateNumber(0));
     }
 
     @Test
-    public void negativTest() {
+    public void greaterTestCase() {
         assertNotEquals("vierzehn" , translator.translateNumber(14));
     }
 
     @Test
-    public void positivTest() {
+    public void validTestCase() {
         assertEquals("drei" , translator.translateNumber(3));
     }
 }
