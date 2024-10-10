@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class Container {
 
-    private int size = 0;
     ArrayList<Member> memberList = new ArrayList<>();
 
     public void addMember(Member member) throws ContainerException {
@@ -17,14 +16,13 @@ public class Container {
             }
         }
         memberList.add(member);
-        this.size++;
     }
 
-    public void deleteMember(Integer id) {
+    public String deleteMember(Integer id) {
         if(memberList.removeIf(m -> m.getID().equals(id))) {
-            this.size--;
+            return "Member mit " + id + "gelöscht.";
         } else {
-            System.out.println("Member mit " + id + " nicht vorhanden.");
+            return"Member mit " + id + " nicht vorhanden.";
         }
     }
 
@@ -33,6 +31,6 @@ public class Container {
     }
 
     public Integer size() {
-        return size;
+        return memberList.size();
     }
 }
