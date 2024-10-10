@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class Container {
 
-    private Integer size = 0;
+    private int size = 0;
     ArrayList<Member> memberList = new ArrayList<>();
 
     public void addMember(Member member) throws ContainerException {
         for (Member m : memberList) {
-            if (m.getID() == member.getID()) {
+            if (m.getID().equals(member.getID())) {
                 throw new ContainerException("Das Member-Objekt mit der ID " + m.getID() + " ist bereits vorhanden!");
             }
         }
@@ -21,7 +21,7 @@ public class Container {
     }
 
     public void deleteMember(Integer id) {
-        if(memberList.removeIf(m -> m.getID() == id)) {
+        if(memberList.removeIf(m -> m.getID().equals(id))) {
             this.size--;
         } else {
             System.out.println("Member mit " + id + " nicht vorhanden.");
@@ -29,9 +29,7 @@ public class Container {
     }
 
     public void dump() {
-        for(Member m : memberList) {
-            System.out.println(m);
-        }
+        System.out.println(memberList);
     }
 
     public Integer size() {
