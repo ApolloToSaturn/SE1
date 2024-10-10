@@ -4,4 +4,3 @@ Das UML-Diagram für die Aufgabe 2 heißt "GermanTranslatorUML.pdf"
 
 
 
-
