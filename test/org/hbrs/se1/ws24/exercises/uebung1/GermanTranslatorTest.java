@@ -1,4 +1,4 @@
-package org.hbrs.se1.ws24.tests.uebung1;
+package org.hbrs.se1.ws24.exercises.uebung1;
 
 import org.hbrs.se1.ws24.exercises.uebung1.control.GermanTranslator;
 import org.junit.jupiter.api.AfterEach;

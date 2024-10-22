@@ -1,5 +1,6 @@
-package org.hbrs.se1.ws24.exercises.uebung2.container;
+package org.hbrs.se1.ws24.exercises.uebung2;
 
+import org.hbrs.se1.ws24.exercises.uebung2.container.Container;
 import org.hbrs.se1.ws24.exercises.uebung2.fehlerbehandlung.ContainerException;
 import org.hbrs.se1.ws24.exercises.uebung2.member.ConcreteMember;
 import org.hbrs.se1.ws24.exercises.uebung2.member.Member;
@@ -17,7 +18,7 @@ class ContainerTest {
 
     @BeforeEach
     void setUp() {
-        container = new Container();
+        container = Container.getInstance();
         member1 = new ConcreteMember(1);
         member2 = new ConcreteMember(2);
     }
