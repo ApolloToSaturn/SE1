@@ -1,1 +1,4 @@
 private Konstruktor erstellen
+synchronized in methodenkopf getinstance -> es darf kein kontextwechsel stattfinden
+
+oder if inst == null { synchronized (Container.class) { if Inst == null{ Inst = new Container}}}
