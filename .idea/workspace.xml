@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11b931b2-f8a2-4546-af99-1df1f0f211cc" name="Changes" comment="Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert.">
+    <list default="true" id="11b931b2-f8a2-4546-af99-1df1f0f211cc" name="Changes" comment="UserStory.java, UserStoryView.java und Client.java für Übung4 hochgeladen">
+      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung4/Client/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung4/UserStory/UserStory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung4/UserStory/UserStoryView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/org/hbrs/se1/ws24/exercises/uebung3/ContainerPersistenceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/org/hbrs/se1/ws24/exercises/uebung3/ContainerPersistenceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/org/hbrs/se1/ws24/exercises/uebung3/objects.ser" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/objects.ser" beforeDir="false" afterPath="$PROJECT_DIR$/objects.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung2/container/Container.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung2/container/Container.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung2/member/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung2/member/Member.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,47 +73,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.Client.executor": "Run",
-    "Application.Container.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.ContainerPersistenceTest.executor": "Run",
-    "JUnit.ContainerPersistenceTest.roundTripTest.executor": "Run",
-    "JUnit.ContainerPersistenceTest.testNullPersistence.executor": "Run",
-    "JUnit.ContainerPersistenceTest.usingMongoDBPersistenceStrategy.executor": "Run",
-    "JUnit.ContainerPersistenceTest.wrongDirectory.executor": "Run",
-    "JUnit.ContainerTest.addMember.executor": "Run",
-    "JUnit.ContainerTest.deleteMember.executor": "Run",
-    "JUnit.ContainerTest.executor": "Run",
-    "JUnit.GermanTranslatorTest.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "create.test.in.the.same.root": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/Uni/WS2425/Uebung2",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.externalTools",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.Client.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Container.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.ContainerTest.addMember.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ContainerTest.deleteMember.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ContainerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GermanTranslatorTest.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Uni/WS2425/Uebung2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises" />
@@ -119,15 +118,7 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\Uni\WS2425\SE1\test\org\hbrs\se1\ws24\exercises\uebung3" />
       <recent name="E:\Uni\WS2425\SE1" />
-      <recent name="E:\Uni\WS2425\SE1\src\org\hbrs\se1\ws24\exercises\uebung1\loesungen" />
-      <recent name="E:\Uni\WS2425\SE1\src\org\hbrs\se1\ws24\exercises\uebung2\loesungen" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="org.hbrs.se1.ws24.exercises.uebung1" />
-      <recent name="org.hbrs.se1.ws24.exercises.uebung2" />
-      <recent name="org.hbrs.se1.ws24.exercises.uebung2.container" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="org.hbrs.se1.ws24.exercises.uebung2.container" />
@@ -135,81 +126,75 @@
       <recent name="org.hbrs.se1.ws24.exercises.uebung1.control" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ContainerPersistenceTest">
-    <configuration name="ContainerPersistenceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.Client">
+    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung4.Client.Client" />
       <module name="codesSE2024" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung3.*" />
+          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung4.Client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.hbrs.se1.ws24.exercises.uebung3" />
-      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Container" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung2.container.Container" />
+      <module name="codesSE2024" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung2.fehlerbehandlung.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ContainerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="codesSE2024" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung2.container.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.hbrs.se1.ws24.exercises.uebung2.container" />
+      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung2.container.ContainerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContainerPersistenceTest.roundTripTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ContainerTest.addMember" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="codesSE2024" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung3.*" />
+          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung2.container.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.hbrs.se1.ws24.exercises.uebung3" />
-      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest" />
-      <option name="METHOD_NAME" value="roundTripTest" />
+      <option name="PACKAGE_NAME" value="org.hbrs.se1.ws24.exercises.uebung2.container" />
+      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung2.container.ContainerTest" />
+      <option name="METHOD_NAME" value="addMember" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContainerPersistenceTest.testNullPersistence" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ContainerTest.deleteMember" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="codesSE2024" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung3.*" />
+          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung2.container.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.hbrs.se1.ws24.exercises.uebung3" />
-      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest" />
-      <option name="METHOD_NAME" value="testNullPersistence" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ContainerPersistenceTest.usingMongoDBPersistenceStrategy" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="codesSE2024" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung3.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.hbrs.se1.ws24.exercises.uebung3" />
-      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest" />
-      <option name="METHOD_NAME" value="usingMongoDBPersistenceStrategy" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ContainerPersistenceTest.wrongDirectory" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="codesSE2024" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung3.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.hbrs.se1.ws24.exercises.uebung3" />
-      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest" />
-      <option name="METHOD_NAME" value="wrongDirectory" />
+      <option name="PACKAGE_NAME" value="org.hbrs.se1.ws24.exercises.uebung2.container" />
+      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung2.container.ContainerTest" />
+      <option name="METHOD_NAME" value="deleteMember" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -217,11 +202,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ContainerPersistenceTest" />
-        <item itemvalue="JUnit.ContainerPersistenceTest.roundTripTest" />
-        <item itemvalue="JUnit.ContainerPersistenceTest.wrongDirectory" />
-        <item itemvalue="JUnit.ContainerPersistenceTest.usingMongoDBPersistenceStrategy" />
-        <item itemvalue="JUnit.ContainerPersistenceTest.testNullPersistence" />
+        <item itemvalue="Application.Client" />
+        <item itemvalue="JUnit.ContainerTest" />
+        <item itemvalue="JUnit.ContainerTest.deleteMember" />
+        <item itemvalue="JUnit.ContainerTest.addMember" />
+        <item itemvalue="Application.Container" />
       </list>
     </recent_temporary>
   </component>
@@ -248,10 +233,12 @@
       <workItem from="1728374163153" duration="1296000" />
       <workItem from="1728416524148" duration="111000" />
       <workItem from="1728546919206" duration="935000" />
-      <workItem from="1728980411175" duration="1387000" />
-      <workItem from="1728983972794" duration="238000" />
-      <workItem from="1729338146725" duration="1590000" />
-      <workItem from="1729587941954" duration="7010000" />
+      <workItem from="1731328840855" duration="371000" />
+      <workItem from="1731329261804" duration="60000" />
+      <workItem from="1731329330971" duration="49000" />
+      <workItem from="1731329386936" duration="127000" />
+      <workItem from="1731329521783" duration="718000" />
+      <workItem from="1731342583183" duration="2717000" />
     </task>
     <task id="LOCAL-00001" summary="Anpassung der translateNumber-Methode&#10;&#10;Main-Methode in Client entfernt&#10;&#10;Testklasse GermanTranslatorTest erstellt und verschiedene Testfälle implementiert.">
       <option name="closed" value="true" />
@@ -309,55 +296,7 @@
       <option name="project" value="LOCAL" />
       <updated>1728552620365</updated>
     </task>
-    <task id="LOCAL-00008" summary="Anpassungen">
-      <option name="closed" value="true" />
-      <created>1728552958209</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1728552958209</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Anpassungen">
-      <option name="closed" value="true" />
-      <created>1728984030574</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1728984030574</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Anpassungen">
-      <option name="closed" value="true" />
-      <created>1728984158499</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1728984158499</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Anpassungen">
-      <option name="closed" value="true" />
-      <created>1728984194957</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1728984194957</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Anpassungen">
-      <option name="closed" value="true" />
-      <created>1729338169244</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1729338169244</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert.">
-      <option name="closed" value="true" />
-      <created>1729615753275</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1729615753275</updated>
-    </task>
-    <option name="localTasksCounter" value="14" />
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,9 +319,8 @@
     <MESSAGE value="." />
     <MESSAGE value="Added Uebung1.pdf" />
     <MESSAGE value="ConcreteMember, Container, ContainerException und ContainerTest hinzugefügt und implementiert." />
-    <MESSAGE value="Anpassungen" />
-    <MESSAGE value="Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert." />
-    <option name="LAST_COMMIT_MESSAGE" value="Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert." />
+    <MESSAGE value="UserStory.java, UserStoryView.java und Client.java für Übung4 hochgeladen" />
+    <option name="LAST_COMMIT_MESSAGE" value="UserStory.java, UserStoryView.java und Client.java für Übung4 hochgeladen" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

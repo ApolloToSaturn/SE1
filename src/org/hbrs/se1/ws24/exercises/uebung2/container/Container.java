@@ -1,10 +1,9 @@
 package org.hbrs.se1.ws24.exercises.uebung2.container;
 
-import org.hbrs.se1.ws24.exercises.uebung2.member.Member;
 import org.hbrs.se1.ws24.exercises.uebung2.fehlerbehandlung.ContainerException;
+import org.hbrs.se1.ws24.exercises.uebung2.member.Member;
 import org.hbrs.se1.ws24.exercises.uebung3.persistence.PersistenceException;
 import org.hbrs.se1.ws24.exercises.uebung3.persistence.PersistenceStrategy;
-import org.hbrs.se1.ws24.exercises.uebung3.persistence.PersistenceStrategyStream;
 import org.hbrs.se1.ws24.exercises.uebung3.view.MemberView;
 
 import java.io.IOException;
