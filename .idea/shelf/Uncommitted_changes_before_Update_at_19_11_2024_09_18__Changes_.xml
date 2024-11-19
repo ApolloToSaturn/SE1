@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Update_at_19_11_2024_09_18_[Changes]" date="1732004287570" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_11_2024_09_18_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 19.11.2024 09:18 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="objects.ser" />
+    <option name="AFTER_PATH" value="objects.ser" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_11_2024_09_18_[Changes]/objects.ser" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="test/org/hbrs/se1/ws24/exercises/uebung3/objects.ser" />
+    <option name="AFTER_PATH" value="test/org/hbrs/se1/ws24/exercises/uebung3/objects.ser" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19_11_2024_09_18_[Changes]/objects1.ser" />
+  </binary>
+</changelist>

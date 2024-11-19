@@ -1,0 +1,920 @@
+Index: src/org/hbrs/se1/ws24/exercises/uebung4/prototype/ContainerException.java
+===================================================================
+diff --git a/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/ContainerException.java b/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/ContainerException.java
+deleted file mode 100644
+--- a/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/ContainerException.java	(revision 272fd8d825a96b4cc7660c38e77b45374b4f0fc2)
++++ /dev/null	(revision 272fd8d825a96b4cc7660c38e77b45374b4f0fc2)
+@@ -1,29 +0,0 @@
+-package org.hbrs.se1.ws24.exercises.uebung4.prototype;
+-
+-public class ContainerException extends Exception {
+-	
+-	private String modus;
+-	private Integer id;
+-	
+-	public ContainerException( String s ) {
+-		super ( s );
+-	}
+-
+-	/**
+-	 * Einfaches Exception-Handling. Orientierung an die Lösung Übungsaufgabe Nr. 3-2 besser...
+-	 */
+-	@Override
+-	public void printStackTrace() {
+-		if (this.id  != null) {
+-			System.out.println("Das Person-Objekt mit der ID " + this.id + " ist bereits vorhanden!");
+-		} else {
+-			System.out.println(this.getMessage());
+-		}
+-	} 
+-
+-	public void addID(Integer id) {
+-		this.id = id;
+-	}
+-
+-
+-}
+Index: src/org/hbrs/se1/ws24/exercises/uebung4/prototype/Container.java
+===================================================================
+diff --git a/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/Container.java b/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/Container.java
+deleted file mode 100644
+--- a/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/Container.java	(revision 272fd8d825a96b4cc7660c38e77b45374b4f0fc2)
++++ /dev/null	(revision 272fd8d825a96b4cc7660c38e77b45374b4f0fc2)
+@@ -1,250 +0,0 @@
+-package org.hbrs.se1.ws24.exercises.uebung4.prototype;
+-
+-import java.io.*;
+-import java.util.ArrayList;
+-import java.util.Collections;
+-import java.util.List;
+-import java.util.Scanner;
+-
+-/*
+- * Klasse zum Management sowie zur Eingabe unnd Ausgabe von User-Stories.
+- * Die Anwendung wird über dies Klasse auch gestartet (main-Methode hier vorhanden)
+- *
+- * erstellt von Julius P., H-BRS 2024, Version 1.1
+- *
+- * Strategie für die Wiederverwendung (Reuse):
+- * - Anlegen der Klasse UserStory
+- * - Anpassen des Generic in der List-Klasse (VORHER: Member, NEU: UserStory)
+- * - Anpassen der Methodennamen
+- *
+- * ToDo: Wie bewerten Sie diese Strategie? Was ist ihre Strategie zur Wiederverwendung? (F1)
+- *
+- * Entwurfsentscheidung: Die wichtigsten Zuständigkeiten (responsibilities)
+- * sind in einer Klasse, d.h. Container?
+- * ToDo: Wie bewerten Sie diese Entscheidung? Was wäre ein sinnvolle Aufteilung (F2, F6)
+- * 
+- */
+-
+-public class Container {
+-	 
+-	// Interne ArrayList zur Abspeicherung der Objekte vom Type UserStory
+-	private List<UserStory> liste = null;
+-	
+-	// Statische Klassen-Variable, um die Referenz
+-	// auf das einzige Container-Objekt abzuspeichern
+-	// Diese Variante sei thread-safe, so hat Hr. P. es gehört... stimmt das?
+-	// Todo: Bewertung Thread-Safeness (F1)
+-	// Todo: Bewertung Speicherbedarf (F1)
+-	private static Container instance = new Container();
+-	
+-	// URL der Datei, in der die Objekte gespeichert werden 
+-	final static String LOCATION = "allStories.ser";
+-
+-	/**
+-	 * Liefert ein Singleton zurück.
+-	 * @return
+-	 */
+-	public static Container getInstance() {
+-		return instance;
+-	}
+-	
+-	/**
+-	 * Vorschriftsmäßiges Ueberschreiben des Konstruktors (private) gemaess Singleton-Pattern (oder?)
+-	 * Nun auf private gesetzt! Vorher ohne Access Qualifier (--> dann package-private)
+-	 */
+-	public Container(){
+-		liste = new ArrayList<UserStory>();
+-	}
+-	
+-	/**
+-	 * Start-Methoden zum Starten des Programms 
+-	 * (hier koennen ggf. weitere Initialisierungsarbeiten gemacht werden spaeter)
+-	 */
+-	public static void main (String[] args) throws Exception {
+-		// ToDo: Bewertung Exception-Handling (F3, F7)
+-		Container con = Container.getInstance();
+-		con.startEingabe(); 
+-	}
+-	
+-	/*
+-	 * Diese Methode realisiert eine Eingabe ueber einen Scanner
+-	 * Alle Exceptions werden an den aufrufenden Context (hier: main) weitergegeben (throws)
+-	 * Das entlastet den Entwickler zur Entwicklungszeit und den Endanwender zur Laufzeit
+-	 */
+-	public void startEingabe() throws ContainerException, Exception {
+-		String strInput = null;
+-		
+-		// Initialisierung des Eingabe-View
+-		// ToDo: Funktionsweise des Scanners erklären (F3)
+-		Scanner scanner = new Scanner( System.in );
+-
+-		while ( true ) {
+-			// Ausgabe eines Texts zur Begruessung
+-			System.out.println("UserStory-Tool V1.0 by Julius P. (dedicated to all my friends)");
+-
+-			System.out.print( "> "  );
+-			strInput = scanner.nextLine();
+-		
+-			// Extrahiert ein Array aus der Eingabe
+-			String[] strings = strInput.split(" ");
+-
+-			// 	Falls 'help' eingegeben wurde, werden alle Befehle ausgedruckt
+-			if ( strings[0].equals("help") ) {
+-				System.out.println("Folgende Befehle stehen zur Verfuegung: help, dump....");
+-			}
+-			// Auswahl der bisher implementierten Befehle:
+-			if ( strings[0].equals("dump") ) {
+-				startAusgabe();
+-			}
+-			// Auswahl der bisher implementierten Befehle:
+-			if ( strings[0].equals("enter") ) {
+-				// Daten einlesen ... (Ihre Aufgabe!)
+-				// this.addUserStory( new UserStory( data ) ) um das Objekt in die Liste einzufügen.
+-			}
+-								
+-			if (  strings[0].equals("store")  ) {
+-				// Beispiel-Code zum Anlegen und Speichern einer UserStory:
+-				UserStory userStory = new UserStory();
+-				userStory.setId( 22 );
+-				this.addUserStory( userStory );
+-				this.store();
+-			}
+-		} // Ende der Schleife
+-	}
+-
+-	/**
+-	 * Diese Methode realisiert die Ausgabe.
+-	 */
+-	public void startAusgabe() {
+-
+-		// Hier möchte Herr P. die Liste mit einem eigenen Sortieralgorithmus sortieren und dann
+-		// ausgeben. Allerdings weiss der Student hier nicht weiter!
+-
+-		// [Sortierung ausgelassen]
+-		// Todo: Implementierung Sortierung (F4)
+-
+-		// Klassische Ausgabe ueber eine For-Each-Schleife
+-		for (UserStory story : liste) {
+-			System.out.println(story.toString());
+-		}
+-
+-		//  [Variante mit forEach-Methode / Streams (--> Lösung Übung Nr. 2)?
+-		//  Gerne auch mit Beachtung der neuen US1
+-		//  (Filterung Projekt = "ein Wert (z.B. Coll@HBRS)" und z.B. Prio >=3
+-		//  Todo: Implementierung Filterung mit Lambda (F5)
+-	}
+-
+-	/*
+-	 * Methode zum Speichern der Liste. Es wird die komplette Liste
+-	 * inklusive ihrer gespeicherten UserStory-Objekte gespeichert.
+-	 * 
+-	 */
+-	public void store() throws ContainerException {
+-		ObjectOutputStream oos = null;
+-		FileOutputStream fos = null;
+-		try {
+-			fos = new FileOutputStream( Container.LOCATION );
+-			oos = new ObjectOutputStream(fos);
+-			
+-			oos.writeObject( this.liste );
+-			System.out.println( this.size() + " UserStory wurden erfolgreich gespeichert!");
+-		}
+-		catch (IOException e) {
+-			e.printStackTrace();
+-		  //  Delegation in den aufrufendem Context
+-		  // (Anwendung Pattern "Chain Of Responsibility)
+-		  throw new ContainerException("Fehler beim Abspeichern");
+-		}
+-	}
+-
+-	/*
+-	 * Methode zum Laden der Liste. Es wird die komplette Liste
+-	 * inklusive ihrer gespeicherten UserStory-Objekte geladen.
+-	 * 
+-	 */
+-	public void load() {
+-		ObjectInputStream ois = null;
+-		FileInputStream fis = null;
+-		try {
+-		  fis = new FileInputStream( Container.LOCATION );
+-		  ois = new ObjectInputStream(fis);
+-		  
+-		  // Auslesen der Liste
+-		  Object obj = ois.readObject();
+-		  if (obj instanceof List<?>) {
+-			  this.liste = (List) obj;
+-		  }
+-		  System.out.println("Es wurden " + this.size() + " UserStory erfolgreich reingeladen!");
+-		}
+-		catch (IOException e) {
+-			System.out.println("LOG (für Admin): Datei konnte nicht gefunden werden!");
+-		}
+-		catch (ClassNotFoundException e) {
+-			System.out.println("LOG (für Admin): Liste konnte nicht extrahiert werden (ClassNotFound)!");
+-		}
+-		finally {
+-		  if (ois != null) try { ois.close(); } catch (IOException e) {}
+-		  if (fis != null) try { fis.close(); } catch (IOException e) {}
+-		}
+-	}
+-
+-	/**
+-	 * Methode zum Hinzufügen eines Mitarbeiters unter Wahrung der Schlüsseleigenschaft
+-	 * @param userStory
+-	 * @throws ContainerException
+-	 */
+-	public void addUserStory ( UserStory userStory ) throws ContainerException {
+-		if ( contains(userStory) == true ) {
+-			ContainerException ex = new ContainerException("ID bereits vorhanden!");
+-			throw ex;
+-		}
+-		liste.add(userStory);
+-	}
+-
+-	/**
+-	 * Prüft, ob eine UserStory bereits vorhanden ist
+-	 * @param userStory
+-	 * @return
+-	 */
+-	private boolean contains( UserStory userStory) {
+-		int ID = userStory.getId();
+-		for ( UserStory userStory1 : liste) {
+-			if ( userStory1.getId() == ID ) {
+-				return true;
+-			}
+-		}
+-		return false;
+-	}
+-
+-	/**
+-	 * Ermittlung der Anzahl von internen UserStory
+-	 * -Objekten
+-	 * @return
+-	 */
+-	public int size() {
+-		return liste.size();
+-	}
+-
+-	/**
+-	 * Methode zur Rückgabe der aktuellen Liste mit Stories
+-	 * Findet aktuell keine Anwendung bei Hr. P.
+-	 * @return
+-	 */
+-	public List<UserStory> getCurrentList() {
+-		return this.liste;
+-	}
+-
+-	/**
+-	 * Liefert eine bestimmte UserStory zurück
+-	 * @param id
+-	 * @return
+-	 */
+-	private UserStory getUserStory(int id) {
+-		for ( UserStory userStory : liste) {
+-			if (id == userStory.getId() ){
+-				return userStory;
+-			}
+-		}
+-		return null;
+-	}
+-}
+Index: src/org/hbrs/se1/ws24/exercises/uebung4/prototype/UserStory.java
+===================================================================
+diff --git a/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/UserStory.java b/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/UserStory.java
+deleted file mode 100644
+--- a/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/UserStory.java	(revision 272fd8d825a96b4cc7660c38e77b45374b4f0fc2)
++++ /dev/null	(revision 272fd8d825a96b4cc7660c38e77b45374b4f0fc2)
+@@ -1,56 +0,0 @@
+-package org.hbrs.se1.ws24.exercises.uebung4.prototype;
+-    public class UserStory {
+-        // ToDo: Sind die Attribute der Klasse UserStory vollständig? Wie sieht es mit den
+-        //  Sichtbarkeiten aus? (F4)
+-
+-        String titel;
+-        int id = 0;
+-        double prio = 0.0;
+-        String project;
+-
+-        public String getProject() {
+-            return project;
+-        }
+-
+-        public void setProject(String project) {
+-            this.project = project;
+-        }
+-
+-        public UserStory(int id, String titel, double prio) {
+-            this.id = id;
+-            this.titel = titel;
+-            this.prio = prio;
+-        }
+-
+-        public UserStory() {
+-        }
+-
+-        public double getPrio() {
+-            return prio;
+-        }
+-
+-        public void setPrio(double prio) {
+-            this.prio = prio;
+-        }
+-
+-        public String getTitel() {
+-            return titel;
+-        }
+-
+-        public void setTitel(String titel) {
+-            this.titel = titel;
+-        }
+-
+-        public int getId() {
+-            return id;
+-        }
+-
+-        public void setId(int id) {
+-            this.id = id;
+-        }
+-
+-    }
+-
+-
+-
+-
+Index: src/org/hbrs/se1/ws24/exercises/uebung2/member/Member.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.hbrs.se1.ws24.exercises.uebung2.member;\r\npublic interface Member {\r\n\r\n    /**\r\n     * Die ID ist über einen Konstruktor einer Klasse, welches dieses Interface implementiert,\r\n     * zu setzen. Die ID darf nicht innerhalb des Container-Objekts gesetzt werden.\r\n     * Die ID dient als Primärschlüssel zur Unterscheidung aller Member-Objekte.\r\n     */\r\n    \r\n    public Integer getID();\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/org/hbrs/se1/ws24/exercises/uebung2/member/Member.java b/src/org/hbrs/se1/ws24/exercises/uebung2/member/Member.java
+--- a/src/org/hbrs/se1/ws24/exercises/uebung2/member/Member.java	(revision 272fd8d825a96b4cc7660c38e77b45374b4f0fc2)
++++ b/src/org/hbrs/se1/ws24/exercises/uebung2/member/Member.java	(date 1730887797106)
+@@ -1,5 +1,8 @@
+ package org.hbrs.se1.ws24.exercises.uebung2.member;
+-public interface Member {
++
++import java.io.Serializable;
++
++public interface Member extends Serializable {
+ 
+     /**
+      * Die ID ist über einen Konstruktor einer Klasse, welches dieses Interface implementiert,
+Index: src/org/hbrs/se1/ws24/exercises/uebung4/View/UserStoryView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/org/hbrs/se1/ws24/exercises/uebung4/View/UserStoryView.java b/src/org/hbrs/se1/ws24/exercises/uebung4/View/UserStoryView.java
+new file mode 100644
+--- /dev/null	(date 1730889049212)
++++ b/src/org/hbrs/se1/ws24/exercises/uebung4/View/UserStoryView.java	(date 1730889049212)
+@@ -0,0 +1,24 @@
++package org.hbrs.se1.ws24.exercises.uebung4.View;
++
++import org.hbrs.se1.ws24.exercises.uebung4.UserStory.UserStory;
++
++import java.util.List;
++
++public class UserStoryView {
++   public static void dump(List<UserStory> userStories) {
++    // Tabellenkopf ausgeben
++    System.out.println("------------------------------------------------------------------------------------------------------------------");
++    System.out.printf("| %4s | %20s | %30s | %6s | %6s | %6s | %6s | %10s | %8s |\n",
++            "ID", "Titel", "Akzeptanzkriterium", "Risiko", "Aufwand", "Nutzen", "Mehrwert", "Projekt", "Priorität");
++    System.out.println("------------------------------------------------------------------------------------------------------------------");
++
++    // User Stories in Tabellenform ausgeben
++    for (UserStory userStory : userStories) {
++        System.out.printf("| %4d | %20s | %30s | %6d | %6d | %6d | %6d | %10s | %8.2f |\n",
++                userStory.getID(), userStory.getTitle(), userStory.getAkzeptanzKriterium(), userStory.getRisiko(),
++                userStory.getAufwand(), userStory.getNutzen(), userStory.getMehrwert(), userStory.getProjekt(),
++                userStory.getPrioritaet());
++    }
++    System.out.println("------------------------------------------------------------------------------------------------------------------");
++}
++}
+\ No newline at end of file
+Index: src/org/hbrs/se1/ws24/exercises/uebung2/member/ConcreteMember.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.hbrs.se1.ws24.exercises.uebung2.member;\r\n\r\nimport java.io.Serializable;\r\n\r\npublic class ConcreteMember implements Member, Serializable {\r\n\r\n    private int id;\r\n\r\n    public ConcreteMember(Integer id) {\r\n        this.id = id;\r\n    }\r\n    @Override\r\n    public Integer getID() {\r\n        return id;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Member (ID = \" + getID() + \")\";\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/org/hbrs/se1/ws24/exercises/uebung2/member/ConcreteMember.java b/src/org/hbrs/se1/ws24/exercises/uebung2/member/ConcreteMember.java
+--- a/src/org/hbrs/se1/ws24/exercises/uebung2/member/ConcreteMember.java	(revision 272fd8d825a96b4cc7660c38e77b45374b4f0fc2)
++++ b/src/org/hbrs/se1/ws24/exercises/uebung2/member/ConcreteMember.java	(date 1730887772248)
+@@ -2,7 +2,7 @@
+ 
+ import java.io.Serializable;
+ 
+-public class ConcreteMember implements Member, Serializable {
++public class ConcreteMember implements Member {
+ 
+     private int id;
+ 
+Index: src/org/hbrs/se1/ws24/exercises/uebung4/Client/Client.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/org/hbrs/se1/ws24/exercises/uebung4/Client/Client.java b/src/org/hbrs/se1/ws24/exercises/uebung4/Client/Client.java
+new file mode 100644
+--- /dev/null	(date 1730890415114)
++++ b/src/org/hbrs/se1/ws24/exercises/uebung4/Client/Client.java	(date 1730890415114)
+@@ -0,0 +1,133 @@
++package org.hbrs.se1.ws24.exercises.uebung4.Client;
++
++import org.hbrs.se1.ws24.exercises.uebung2.container.Container;
++import org.hbrs.se1.ws24.exercises.uebung2.fehlerbehandlung.ContainerException;
++import org.hbrs.se1.ws24.exercises.uebung3.persistence.PersistenceException;
++import org.hbrs.se1.ws24.exercises.uebung3.persistence.PersistenceStrategy;
++import org.hbrs.se1.ws24.exercises.uebung3.persistence.PersistenceStrategyStream;
++import org.hbrs.se1.ws24.exercises.uebung4.UserStory.UserStory;
++import org.hbrs.se1.ws24.exercises.uebung4.View.UserStoryView;
++
++import java.util.Scanner;
++
++public class Client {
++    private static Container<UserStory> container;
++    private static PersistenceStrategy<UserStory> persistenceStrategy;
++    private static Scanner scanner;
++
++    public static void main(String[] args) throws PersistenceException {
++        programmInitialisierung();
++        printHelp();
++        userCommands();
++    }
++    private static void programmInitialisierung() throws PersistenceException {
++        container = Container.getInstance();
++        persistenceStrategy = new PersistenceStrategyStream<UserStory>();
++        scanner = new Scanner(System.in);
++        container.setPersistenceStrategyStream(persistenceStrategy);
++       // container.load();
++        System.out.println("Client gestartet und alte Werte geladen.");
++    }
++
++    private static void userCommands() {
++        while (true) {
++            System.out.print("Befehl eingeben:\n");
++            String input = scanner.nextLine();
++            try {
++                switch (input) {
++                    case "enter" -> userStoryInput();
++                    case "store" -> container.store();
++                    case "load" -> container.load();
++                    case "dump" -> UserStoryView.dump(container.getCurrentList());
++                    case "exit" -> {
++                        container.store();
++                        System.out.println("Programm beendet.");
++                        return;
++                    }
++                    case "help" -> printHelp();
++                    default -> System.out.println("Unbekannter Befehl ist aufgetreten\n. Bitte geben Sie 'help' für eine Liste der vorhandenen Befehle ein.");
++                }
++            } catch (Exception e) {
++                System.out.println("Fehler: " + e.getMessage());
++            }
++        }
++    }
++
++    private static void userStoryInput() throws ContainerException {
++        Integer id = readInteger("ID");
++        String title = readString("Titel");
++        String acceptanceCriteria = readString("Akzeptanzkriterium");
++        String project = readString("Projekt");
++
++        Integer value = readBoundedInteger("Mehrwert (Wert muss zwischen 1 und 5 liegen)", 1, 5);
++        Integer penalty = readBoundedInteger("Strafe (Wert muss zwischen 1 und 5 liegen)", 1, 5);
++        Integer effort = readBoundedInteger("Aufwand (Wert muss zwischen 1 und 5 liegen)", 1, 5);
++        Integer risk = readBoundedInteger(0);
++
++        UserStory story = new UserStory(id, title, acceptanceCriteria, project, value, penalty, effort, risk);
++        container.addMember(story);
++        System.out.println("User Story hinzugefügt.");
++    }
++
++    /**
++     * Liest eine Zeichenkette von der Konsole ein.
++     *
++     * @param prompt Der Anzeigetext für die Eingabeaufforderung
++     * @return die vom Benutzer eingegebene Zeichenkette
++     */
++    private static String readString(String prompt) {
++        System.out.print(prompt + ": ");
++        return scanner.nextLine().trim();
++    }
++
++    /**
++     * Liest eine Ganzzahl von der Konsole ein und behandelt fehlerhafte Eingaben.
++     *
++     * @param prompt Der Anzeigetext für die Eingabeaufforderung
++     * @return die vom Benutzer eingegebene Ganzzahl
++     */
++    private static Integer readInteger(String prompt) {
++        while (true) {
++            try {
++                System.out.print(prompt + ": ");
++                return Integer.parseInt(scanner.nextLine().trim());
++            } catch (NumberFormatException e) {
++                System.out.println("Ungültige Eingabe. Bitte eine Ganzzahl eingeben.");
++            }
++        }
++    }
++
++    private static Integer readBoundedInteger(String prompt, int min, int max) {
++        while (true) {
++            int value = readInteger(prompt);
++            if (value >= min && value <= max) {
++                return value;
++            } else {
++                System.out.println("Bitte eine Zahl zwischen " + min + " und " + max + " eingeben.");
++            }
++        }
++    }
++
++    private static Integer readBoundedInteger(int min) {
++        while (true) {
++            int value = readInteger("Risiko (Wert muss größer 0 sein)");
++            if (value > min) {
++                return value;
++            } else {
++                System.out.println("Bitte eine Zahl größer " + min + " eingeben.");
++            }
++        }
++    }
++
++    private static void printHelp() {
++        System.out.println("---------------------------");
++        System.out.println("Verfügbare Befehle:");
++        System.out.println("enter: Eingabe einer UserStory");
++        System.out.println("store: Speichert die UserStories");
++        System.out.println("load: Lädt UserStories");
++        System.out.println("dump: Ausgabe aller nach Priorität sortierten UserStories");
++        System.out.println("exit: Programm beenden");
++        System.out.println("help: Zeigt die Hilfe an");
++        System.out.println("---------------------------");
++    }
++}
+Index: src/org/hbrs/se1/ws24/exercises/uebung4/UserStory/UserStory.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/org/hbrs/se1/ws24/exercises/uebung4/UserStory/UserStory.java b/src/org/hbrs/se1/ws24/exercises/uebung4/UserStory/UserStory.java
+new file mode 100644
+--- /dev/null	(date 1730888028270)
++++ b/src/org/hbrs/se1/ws24/exercises/uebung4/UserStory/UserStory.java	(date 1730888028270)
+@@ -0,0 +1,101 @@
++package org.hbrs.se1.ws24.exercises.uebung4.UserStory;
++
++import org.hbrs.se1.ws24.exercises.uebung2.member.Member;
++
++import java.io.Serializable;
++
++public class UserStory implements Member, Serializable {
++
++    private Integer id;
++    private String title;
++    private String akzeptanzKriterium;
++    private String projekt;
++    private Integer risiko;
++    private Integer aufwand;
++    private Integer nutzen;
++    private Integer mehrwert;
++    private double prioritaet;
++
++    public UserStory(Integer id,
++                     String title,
++                     String akzeptanzKriterium,
++                     String projekt,
++                     Integer risiko,
++                     Integer aufwand,
++                     Integer nutzen,
++                     Integer mehrwert) {
++        this.id = id;
++        this.title = title;
++        this.akzeptanzKriterium = akzeptanzKriterium;
++        this.projekt = projekt;
++        if ((risiko < 1 || risiko > 5) ||
++                (aufwand < 1 || aufwand > 5) ||
++                (nutzen < 1 || nutzen > 5) ||
++                (mehrwert < 1 || mehrwert > 5)
++            ) {
++            throw new IllegalArgumentException("Kein gültiger Wert für Risiko, Aufwand, Nutzen oder Mehrwert angeben.\n" +
++                    "Die Werte müssen größer 0 und kleiner 6 sein!");
++        } else {
++            this.risiko = risiko;
++            this.aufwand = aufwand;
++            this.nutzen = nutzen;
++            this.mehrwert = mehrwert;
++            this.prioritaet = berechnePrio();
++        }
++
++
++    }
++
++    private double berechnePrio() {
++        return (double) (risiko + aufwand) / (nutzen + mehrwert);
++    }
++
++    @Override
++    public Integer getID() {
++        return id;
++    }
++
++    public String getTitle() {
++        return title;
++    }
++
++    public String getAkzeptanzKriterium() {
++        return akzeptanzKriterium;
++    }
++
++    public String getProjekt() {
++        return projekt;
++    }
++
++    public Integer getRisiko() {
++        return risiko;
++    }
++
++    public Integer getAufwand() {
++        return aufwand;
++    }
++
++    public Integer getNutzen() {
++        return nutzen;
++    }
++
++    public Integer getMehrwert() {
++        return mehrwert;
++    }
++
++    public double getPrioritaet() {
++        return prioritaet;
++    }
++
++    public String toString() {
++        return "User Story ID: " + getID() + "\n" +
++                "Titel: " + getTitle() + "\n" +
++                "Akzeptanzkriterium: " + getAkzeptanzKriterium() + "\n" +
++                "Risiko: " + getRisiko() + "\n" +
++                "Aufwand: " + getAufwand() + "\n" +
++                "Nutzen: " + getNutzen() + "\n" +
++                "Mehrwert: " + getMehrwert() + "\n" +
++                "Projekt: " + getProjekt() + "\n" +
++                "Priorität: " + getPrioritaet() + "\n";
++    }
++}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"11b931b2-f8a2-4546-af99-1df1f0f211cc\" name=\"Changes\" comment=\"Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert.\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/test/org/hbrs/se1/ws24/exercises/uebung3/ContainerPersistenceTest.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/test/org/hbrs/se1/ws24/exercises/uebung3/ContainerPersistenceTest.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/test/org/hbrs/se1/ws24/exercises/uebung3/objects.ser\" beforeDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ExportToHTMLSettings\">\r\n    <option name=\"OUTPUT_DIRECTORY\" value=\"$PROJECT_DIR$/../SE1\\exportToHTML\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"JUnit5 Test Class\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Pull.Settings\">\r\n    <option name=\"OPTIONS\">\r\n      <set>\r\n        <option value=\"SQUASH\" />\r\n      </set>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PUSH_TAGS\">\r\n      <GitPushTagMode>\r\n        <option name=\"argument\" value=\"--follow-tags\" />\r\n        <option name=\"title\" value=\"Current Branch\" />\r\n      </GitPushTagMode>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;ApolloToSaturn&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">\r\n    <option name=\"selectedUrlAndAccountId\">\r\n      <UrlAndAccount>\r\n        <option name=\"accountId\" value=\"ae1b7fa9-85f0-4f86-8d2d-b105c8fbab42\" />\r\n        <option name=\"url\" value=\"https://github.com/ApolloToSaturn/SE1.git\" />\r\n      </UrlAndAccount>\r\n    </option>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 1\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2mW0K1ridSNtBXJ1HQIirtbe7AX\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_ADD_EXTERNAL_FILES\": \"true\",\r\n    \"Application.Client.executor\": \"Run\",\r\n    \"Application.Container.executor\": \"Run\",\r\n    \"Application.Main.executor\": \"Run\",\r\n    \"Downloaded.Files.Path.Enabled\": \"false\",\r\n    \"JUnit.ContainerPersistenceTest.executor\": \"Run\",\r\n    \"JUnit.ContainerPersistenceTest.roundTripTest.executor\": \"Run\",\r\n    \"JUnit.ContainerPersistenceTest.testNullPersistence.executor\": \"Run\",\r\n    \"JUnit.ContainerPersistenceTest.usingMongoDBPersistenceStrategy.executor\": \"Run\",\r\n    \"JUnit.ContainerPersistenceTest.wrongDirectory.executor\": \"Run\",\r\n    \"JUnit.ContainerTest.addMember.executor\": \"Run\",\r\n    \"JUnit.ContainerTest.deleteMember.executor\": \"Run\",\r\n    \"JUnit.ContainerTest.executor\": \"Run\",\r\n    \"JUnit.GermanTranslatorTest.executor\": \"Run\",\r\n    \"Repository.Attach.Annotations\": \"false\",\r\n    \"Repository.Attach.JavaDocs\": \"false\",\r\n    \"Repository.Attach.Sources\": \"false\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary\": \"JUnit5\",\r\n    \"com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5\": \"\",\r\n    \"create.test.in.the.same.root\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"E:/Uni/WS2425/Uebung2\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"Modules\",\r\n    \"project.structure.proportion\": \"0.0\",\r\n    \"project.structure.side.proportion\": \"0.0\",\r\n    \"settings.editor.selected.configurable\": \"preferences.externalTools\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises\" />\r\n      <recent name=\"$PROJECT_DIR$/src\" />\r\n    </key>\r\n    <key name=\"CreateTestDialog.Recents.Supers\">\r\n      <recent name=\"\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"E:\\Uni\\WS2425\\SE1\\test\\org\\hbrs\\se1\\ws24\\exercises\\uebung3\" />\r\n      <recent name=\"E:\\Uni\\WS2425\\SE1\" />\r\n      <recent name=\"E:\\Uni\\WS2425\\SE1\\src\\org\\hbrs\\se1\\ws24\\exercises\\uebung1\\loesungen\" />\r\n      <recent name=\"E:\\Uni\\WS2425\\SE1\\src\\org\\hbrs\\se1\\ws24\\exercises\\uebung2\\loesungen\" />\r\n    </key>\r\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\r\n      <recent name=\"org.hbrs.se1.ws24.exercises.uebung1\" />\r\n      <recent name=\"org.hbrs.se1.ws24.exercises.uebung2\" />\r\n      <recent name=\"org.hbrs.se1.ws24.exercises.uebung2.container\" />\r\n    </key>\r\n    <key name=\"CreateTestDialog.RecentsKey\">\r\n      <recent name=\"org.hbrs.se1.ws24.exercises.uebung2.container\" />\r\n      <recent name=\"org.hbrs.se1.ws24.tests.uebung1\" />\r\n      <recent name=\"org.hbrs.se1.ws24.exercises.uebung1.control\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"JUnit.ContainerPersistenceTest\">\r\n    <configuration name=\"ContainerPersistenceTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"codesSE2024\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"org.hbrs.se1.ws24.exercises.uebung3.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"org.hbrs.se1.ws24.exercises.uebung3\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ContainerPersistenceTest.roundTripTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"codesSE2024\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"org.hbrs.se1.ws24.exercises.uebung3.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"org.hbrs.se1.ws24.exercises.uebung3\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"roundTripTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ContainerPersistenceTest.testNullPersistence\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"codesSE2024\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"org.hbrs.se1.ws24.exercises.uebung3.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"org.hbrs.se1.ws24.exercises.uebung3\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"testNullPersistence\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ContainerPersistenceTest.usingMongoDBPersistenceStrategy\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"codesSE2024\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"org.hbrs.se1.ws24.exercises.uebung3.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"org.hbrs.se1.ws24.exercises.uebung3\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"usingMongoDBPersistenceStrategy\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ContainerPersistenceTest.wrongDirectory\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"codesSE2024\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"org.hbrs.se1.ws24.exercises.uebung3.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"org.hbrs.se1.ws24.exercises.uebung3\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"wrongDirectory\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"JUnit.ContainerPersistenceTest\" />\r\n        <item itemvalue=\"JUnit.ContainerPersistenceTest.roundTripTest\" />\r\n        <item itemvalue=\"JUnit.ContainerPersistenceTest.wrongDirectory\" />\r\n        <item itemvalue=\"JUnit.ContainerPersistenceTest.usingMongoDBPersistenceStrategy\" />\r\n        <item itemvalue=\"JUnit.ContainerPersistenceTest.testNullPersistence\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"jdk-19.0.2-corretto-19.0.2-4caba194b151-48ba4555\" />\r\n        <option value=\"jdk-22-openjdk-22-4caba194b151-f504ca98\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"11b931b2-f8a2-4546-af99-1df1f0f211cc\" name=\"Changes\" comment=\"\" />\r\n      <created>1727176957166</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1727176957166</updated>\r\n      <workItem from=\"1727176958305\" duration=\"1892000\" />\r\n      <workItem from=\"1727943387765\" duration=\"5112000\" />\r\n      <workItem from=\"1727950187212\" duration=\"2537000\" />\r\n      <workItem from=\"1728299733939\" duration=\"2621000\" />\r\n      <workItem from=\"1728374163153\" duration=\"1296000\" />\r\n      <workItem from=\"1728416524148\" duration=\"111000\" />\r\n      <workItem from=\"1728546919206\" duration=\"935000\" />\r\n      <workItem from=\"1728980411175\" duration=\"1387000\" />\r\n      <workItem from=\"1728983972794\" duration=\"238000\" />\r\n      <workItem from=\"1729338146725\" duration=\"1590000\" />\r\n      <workItem from=\"1729587941954\" duration=\"7010000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Anpassung der translateNumber-Methode&#10;&#10;Main-Methode in Client entfernt&#10;&#10;Testklasse GermanTranslatorTest erstellt und verschiedene Testfälle implementiert.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1727952536844</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1727952536844</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\".\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728314197030</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728314197030</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\".\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728375353461</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728375353461</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\".\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728375375134</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728375375134</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Added Uebung1.pdf\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728416590548</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728416590548</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"ConcreteMember, Container, ContainerException und ContainerTest hinzugefügt und implementiert.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728552058207</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728552058207</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"ConcreteMember, Container, ContainerException und ContainerTest hinzugefügt und implementiert.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728552620365</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728552620365</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Anpassungen\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728552958209</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728552958209</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"Anpassungen\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728984030574</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728984030574</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Anpassungen\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728984158499</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728984158499</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"Anpassungen\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1728984194957</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1728984194957</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"Anpassungen\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1729338169244</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1729338169244</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1729615753275</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1729615753275</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"14\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"Anpassung der translateNumber-Methode&#10;&#10;Main-Methode in Client entfernt&#10;&#10;Testklasse GermanTranslatorTest erstellt und verschiedene Testfälle implementiert.\" />\r\n    <MESSAGE value=\".\" />\r\n    <MESSAGE value=\"Added Uebung1.pdf\" />\r\n    <MESSAGE value=\"ConcreteMember, Container, ContainerException und ContainerTest hinzugefügt und implementiert.\" />\r\n    <MESSAGE value=\"Anpassungen\" />\r\n    <MESSAGE value=\"Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert.\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert.\" />\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 272fd8d825a96b4cc7660c38e77b45374b4f0fc2)
++++ b/.idea/workspace.xml	(date 1730890646917)
+@@ -4,10 +4,18 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="11b931b2-f8a2-4546-af99-1df1f0f211cc" name="Changes" comment="Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert.">
++    <list default="true" id="11b931b2-f8a2-4546-af99-1df1f0f211cc" name="Changes" comment="SprintPlanningMeeting.pdf hinzugefügt">
++      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung4/Client/Client.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung4/UserStory/UserStory.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung4/View/UserStoryView.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/test/org/hbrs/se1/ws24/exercises/uebung3/ContainerPersistenceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/org/hbrs/se1/ws24/exercises/uebung3/ContainerPersistenceTest.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/test/org/hbrs/se1/ws24/exercises/uebung3/objects.ser" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/objects.ser" beforeDir="false" afterPath="$PROJECT_DIR$/objects.ser" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung2/member/ConcreteMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung2/member/ConcreteMember.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung2/member/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung2/member/Member.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/Container.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/ContainerException.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung4/prototype/UserStory.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/test/org/hbrs/se1/ws24/exercises/uebung3/objects.ser" beforeDir="false" afterPath="$PROJECT_DIR$/test/org/hbrs/se1/ws24/exercises/uebung3/objects.ser" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -69,48 +77,51 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_ADD_EXTERNAL_FILES": "true",
+-    "Application.Client.executor": "Run",
+-    "Application.Container.executor": "Run",
+-    "Application.Main.executor": "Run",
+-    "Downloaded.Files.Path.Enabled": "false",
+-    "JUnit.ContainerPersistenceTest.executor": "Run",
+-    "JUnit.ContainerPersistenceTest.roundTripTest.executor": "Run",
+-    "JUnit.ContainerPersistenceTest.testNullPersistence.executor": "Run",
+-    "JUnit.ContainerPersistenceTest.usingMongoDBPersistenceStrategy.executor": "Run",
+-    "JUnit.ContainerPersistenceTest.wrongDirectory.executor": "Run",
+-    "JUnit.ContainerTest.addMember.executor": "Run",
+-    "JUnit.ContainerTest.deleteMember.executor": "Run",
+-    "JUnit.ContainerTest.executor": "Run",
+-    "JUnit.GermanTranslatorTest.executor": "Run",
+-    "Repository.Attach.Annotations": "false",
+-    "Repository.Attach.JavaDocs": "false",
+-    "Repository.Attach.Sources": "false",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+-    "create.test.in.the.same.root": "true",
+-    "git-widget-placeholder": "main",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "E:/Uni/WS2425/Uebung2",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "project.structure.last.edited": "Modules",
+-    "project.structure.proportion": "0.0",
+-    "project.structure.side.proportion": "0.0",
+-    "settings.editor.selected.configurable": "preferences.externalTools",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
++    &quot;Application.Client.executor&quot;: &quot;Run&quot;,
++    &quot;Application.Container.executor&quot;: &quot;Run&quot;,
++    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
++    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
++    &quot;JUnit.ContainerPersistenceTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.ContainerPersistenceTest.roundTripTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.ContainerPersistenceTest.testNullPersistence.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.ContainerPersistenceTest.usingMongoDBPersistenceStrategy.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.ContainerPersistenceTest.wrongDirectory.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.ContainerTest.addMember.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.ContainerTest.deleteMember.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.ContainerTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.GermanTranslatorTest.executor&quot;: &quot;Run&quot;,
++    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
++    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
++    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
++    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
++    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;E:/Uni/WS2425/Uebung2&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.externalTools&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
++    <key name="CreateClassDialog.RecentsKey">
++      <recent name="org.hbrs.se1.ws24.exercises.uebung4" />
++    </key>
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises" />
+       <recent name="$PROJECT_DIR$/src" />
+@@ -135,23 +146,21 @@
+       <recent name="org.hbrs.se1.ws24.exercises.uebung1.control" />
+     </key>
+   </component>
+-  <component name="RunManager" selected="JUnit.ContainerPersistenceTest">
+-    <configuration name="ContainerPersistenceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++  <component name="RunManager" selected="Application.Client">
++    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung4.Client.Client" />
+       <module name="codesSE2024" />
+       <extension name="coverage">
+         <pattern>
+-          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung3.*" />
++          <option name="PATTERN" value="org.hbrs.se1.ws24.exercises.uebung4.Client.*" />
+           <option name="ENABLED" value="true" />
+         </pattern>
+       </extension>
+-      <option name="PACKAGE_NAME" value="org.hbrs.se1.ws24.exercises.uebung3" />
+-      <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest" />
+-      <option name="TEST_OBJECT" value="class" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="ContainerPersistenceTest.roundTripTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++    <configuration name="ContainerPersistenceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+       <module name="codesSE2024" />
+       <extension name="coverage">
+         <pattern>
+@@ -161,13 +170,12 @@
+       </extension>
+       <option name="PACKAGE_NAME" value="org.hbrs.se1.ws24.exercises.uebung3" />
+       <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest" />
+-      <option name="METHOD_NAME" value="roundTripTest" />
+-      <option name="TEST_OBJECT" value="method" />
++      <option name="TEST_OBJECT" value="class" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="ContainerPersistenceTest.testNullPersistence" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++    <configuration name="ContainerPersistenceTest.roundTripTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+       <module name="codesSE2024" />
+       <extension name="coverage">
+         <pattern>
+@@ -177,7 +185,7 @@
+       </extension>
+       <option name="PACKAGE_NAME" value="org.hbrs.se1.ws24.exercises.uebung3" />
+       <option name="MAIN_CLASS_NAME" value="org.hbrs.se1.ws24.exercises.uebung3.ContainerPersistenceTest" />
+-      <option name="METHOD_NAME" value="testNullPersistence" />
++      <option name="METHOD_NAME" value="roundTripTest" />
+       <option name="TEST_OBJECT" value="method" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+@@ -217,11 +225,11 @@
+     </configuration>
+     <recent_temporary>
+       <list>
++        <item itemvalue="Application.Client" />
+         <item itemvalue="JUnit.ContainerPersistenceTest" />
+         <item itemvalue="JUnit.ContainerPersistenceTest.roundTripTest" />
+         <item itemvalue="JUnit.ContainerPersistenceTest.wrongDirectory" />
+         <item itemvalue="JUnit.ContainerPersistenceTest.usingMongoDBPersistenceStrategy" />
+-        <item itemvalue="JUnit.ContainerPersistenceTest.testNullPersistence" />
+       </list>
+     </recent_temporary>
+   </component>
+@@ -251,7 +259,8 @@
+       <workItem from="1728980411175" duration="1387000" />
+       <workItem from="1728983972794" duration="238000" />
+       <workItem from="1729338146725" duration="1590000" />
+-      <workItem from="1729587941954" duration="7010000" />
++      <workItem from="1729587941954" duration="7702000" />
++      <workItem from="1730881298544" duration="8662000" />
+     </task>
+     <task id="LOCAL-00001" summary="Anpassung der translateNumber-Methode&#10;&#10;Main-Methode in Client entfernt&#10;&#10;Testklasse GermanTranslatorTest erstellt und verschiedene Testfälle implementiert.">
+       <option name="closed" value="true" />
+@@ -357,7 +366,23 @@
+       <option name="project" value="LOCAL" />
+       <updated>1729615753275</updated>
+     </task>
+-    <option name="localTasksCounter" value="14" />
++    <task id="LOCAL-00014" summary="Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert.">
++      <option name="closed" value="true" />
++      <created>1729615901673</created>
++      <option name="number" value="00014" />
++      <option name="presentableId" value="LOCAL-00014" />
++      <option name="project" value="LOCAL" />
++      <updated>1729615901673</updated>
++    </task>
++    <task id="LOCAL-00015" summary="SprintPlanningMeeting.pdf hinzugefügt">
++      <option name="closed" value="true" />
++      <created>1729617749607</created>
++      <option name="number" value="00015" />
++      <option name="presentableId" value="LOCAL-00015" />
++      <option name="project" value="LOCAL" />
++      <updated>1729617749607</updated>
++    </task>
++    <option name="localTasksCounter" value="16" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -382,7 +407,8 @@
+     <MESSAGE value="ConcreteMember, Container, ContainerException und ContainerTest hinzugefügt und implementiert." />
+     <MESSAGE value="Anpassungen" />
+     <MESSAGE value="Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert." />
+-    <option name="LAST_COMMIT_MESSAGE" value="Klassen und Methoden für die dritte Übung hinzugefügt.&#10;&#10;Einige Klassen aus Übung 2 wurden für Übung 3 angepasst und verändert." />
++    <MESSAGE value="SprintPlanningMeeting.pdf hinzugefügt" />
++    <option name="LAST_COMMIT_MESSAGE" value="SprintPlanningMeeting.pdf hinzugefügt" />
+   </component>
+   <component name="XSLT-Support.FileAssociations.UIState">
+     <expand />
