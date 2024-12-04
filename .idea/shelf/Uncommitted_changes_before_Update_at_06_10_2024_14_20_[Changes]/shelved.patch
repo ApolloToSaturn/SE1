@@ -1,0 +1,17 @@
+Index: src/org/hbrs/se1/ws24/exercises/uebung1/control/TranslatorFactory.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.hbrs.se1.ws24.exercises.uebung1.control;\r\n\r\n\r\nimport java.time.LocalDateTime;\r\nimport java.time.format.DateTimeFormatter;\r\n\r\npublic class TranslatorFactory {\r\n\r\n    public static Translator createTranslator() {\r\n        GermanTranslator translator = new GermanTranslator();\r\n        LocalDateTime date = LocalDateTime.now();\r\n        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(\"LLL/yyyy\");\r\n        translator.setDate(date.format(dateTimeFormatter));\r\n        translator.printInfo();\r\n        return translator;\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/src/org/hbrs/se1/ws24/exercises/uebung1/control/TranslatorFactory.java b/src/org/hbrs/se1/ws24/exercises/uebung1/control/TranslatorFactory.java
+--- a/src/org/hbrs/se1/ws24/exercises/uebung1/control/TranslatorFactory.java	
++++ b/src/org/hbrs/se1/ws24/exercises/uebung1/control/TranslatorFactory.java	
+@@ -6,7 +6,7 @@
+ 
+ public class TranslatorFactory {
+ 
+-    public static Translator createTranslator() {
++    public static GermanTranslator createTranslator() {
+         GermanTranslator translator = new GermanTranslator();
+         LocalDateTime date = LocalDateTime.now();
+         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("LLL/yyyy");
