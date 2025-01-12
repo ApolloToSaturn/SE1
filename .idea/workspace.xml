@@ -4,23 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11b931b2-f8a2-4546-af99-1df1f0f211cc" name="Changes" comment="Übung7.1">
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/demo/kapitel6/Buchung.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/demo/kapitel6/BuchungDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/demo/kapitel6/BuchungDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/demo/kapitel6/ClientForBuchung.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung8/Klassendiagramm.uxf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung8/Layer.uxf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung8/MVCPackage.uxf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung8/ReiseAnbieterAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/solutions/uebung7/Consumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/solutions/uebung7/Report.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/solutions/uebung7/SkillConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/solutions/uebung7/SkillReportPublisher.java" afterDir="false" />
+    <list default="true" id="11b931b2-f8a2-4546-af99-1df1f0f211cc" name="Changes" comment="Übung8">
+      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung9/BuchungDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung9/ComplexDocument.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung9/CoreDocument.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung9/GraficDocument.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung9/TestClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/exercises/uebung9/TextDocument.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/demo/kapitel6/ClientForPerson.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/demo/kapitel6/DocumentManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/demo/kapitel6/DocumentManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/demo/kapitel6/ReportDistributor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/demo/kapitel6/ReportDistributor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/demo/kapitel6/Buchung.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/hbrs/se1/ws24/demo/kapitel6/Buchung.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +262,8 @@
       <workItem from="1732636372932" duration="128000" />
       <workItem from="1733297430124" duration="754000" />
       <workItem from="1733835655545" duration="1432000" />
-      <workItem from="1734679312093" duration="2131000" />
+      <workItem from="1734679312093" duration="2235000" />
+      <workItem from="1736685577048" duration="629000" />
     </task>
     <task id="LOCAL-00001" summary="Anpassung der translateNumber-Methode&#10;&#10;Main-Methode in Client entfernt&#10;&#10;Testklasse GermanTranslatorTest erstellt und verschiedene Testfälle implementiert.">
       <option name="closed" value="true" />
@@ -432,7 +425,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733839981729</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Übung8">
+      <option name="closed" value="true" />
+      <created>1734681699443</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1734681699443</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -460,7 +461,8 @@
     <MESSAGE value="..." />
     <MESSAGE value="Übung6" />
     <MESSAGE value="Übung7.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Übung7.1" />
+    <MESSAGE value="Übung8" />
+    <option name="LAST_COMMIT_MESSAGE" value="Übung8" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
