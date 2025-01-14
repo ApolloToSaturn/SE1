@@ -5,7 +5,7 @@ package org.hbrs.se1.ws24.exercises.uebung8;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/*
 
 //    BEISPIELKLASSE
 public class ReiseAnbieterAdapter {
@@ -38,3 +38,4 @@ public class ReiseAnbieterAdapter {
         return ergebnisse;
     }
 }
+*/
